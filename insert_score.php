@@ -30,7 +30,7 @@ $archer_category_id = 1; // tạm thời gán 1, bạn có thể sửa theo th�
 $stmt->bind_param("iisi", $user_id, $round_id, $competition_id, $archer_category_id);
 
 if ($stmt->execute()) {
-    echo "<p>✅ Lưu điểm thành công!</p>";
+    echo "<p>✅ Lưu điểm thành côngggggg!</p>";
     echo "<p>Tổng điểm (chưa lưu): $total_score</p>";
     echo "<a href='view_scores.php?user_id=$user_id'>Xem điểm</a><br>";
     echo "<a href='index.php'>⬅ Về trang chính</a>";
