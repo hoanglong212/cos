@@ -17,7 +17,7 @@
       <th>Xem điểm</th>
     </tr>
     <?php
-      $sql = "SELECT user_id, first_name, last_name, gender FROM user_table LIMIT 20";
+      $sql = "SELECT user_id, first_nameee, last_name, gender FROM user_table LIMIT 20";
       $result = $conn->query($sql);
       if ($result && $result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
