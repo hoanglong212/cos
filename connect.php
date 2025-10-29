@@ -14,7 +14,7 @@
       <th>Họ</th>
       <th>Tên</th>
       <th>Giới tính</th>
-      <th>Xem điểm</th>
+      <th>Xem điểmmmmmmm
     </tr>
     <?php
       $sql = "SELECT user_id, first_name, last_name, gender FROM user_table LIMIT 20";
