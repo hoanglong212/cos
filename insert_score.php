@@ -23,7 +23,7 @@ $sql = "INSERT INTO scores (user_id, round_id, competition_id, archer_category_i
 
 $stmt = $conn->prepare($sql);
 if (!$stmt) {
-    die("❌ Lỗi SQL: " . $conn->error);
+    die("❌ Lỗi : " . $conn->error);
 }
 
 $archer_category_id = 1; // tạm thời gán 1, bạn có thể sửa theo thực tế
