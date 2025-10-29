@@ -1,0 +1,95 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #eeeff2;
+  color: #271d1d;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+  background-image: url(archer.jpg);
+  background-size:  100% 100%;
+  background-position: center;
+  background-repeat: no-repeat; 
+  background-attachment: fixed;
+}
+
+.mainboard {
+   width: 85%;
+  max-width: 1000px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  padding: 30px 20px;
+}
+
+
+h1 {
+  color: #2e4ba4;
+}
+
+
+.table-container {
+  width: 80%;
+  margin: 20px auto;
+  max-height: 500px;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  padding-right: 10px;          
+  scrollbar-gutter: stable;
+}
+
+.table-container::-webkit-scrollbar {
+  width: 8px;
+}
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #718093;
+  border-radius: 4px;
+}
+.table-container::-webkit-scrollbar-thumb:hover {
+  background-color: #596275;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #dcdde1;
+}
+
+th {
+  background: #396cd9;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+tr:nth-child(even) {
+  background: #f1f2f6;
+}
+
+
+a.btn, button {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px 20px;
+  background: #44bd32;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+a.btn:hover, button:hover {
+  background: #4cd137;
+}
+
+
+input {
+  margin: 5px;
+  padding: 5px;
+}
