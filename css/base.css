@@ -1,0 +1,112 @@
+
+@import 'variables.css';
+
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-primary);
+  line-height: 1.6;
+}
+
+/* Common Components */
+.main-wrapper {
+  min-height: 100vh;
+  padding: 20px;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-card {
+  background: white;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.card-header {
+  background: var(--gradient-primary);
+  color: white;
+  padding: 30px;
+  text-align: center;
+  position: relative;
+}
+
+.card-body {
+  padding: 40px;
+}
+
+/* Buttons */
+.btn {
+  padding: 12px 30px;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-primary);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: var(--gradient-primary);
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+
+.btn-success {
+  background: var(--gradient-success);
+  color: white;
+  box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
+}
+
+.btn-info {
+  background: var(--gradient-info);
+  color: white;
+  box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+}
+
+/* Form Elements */
+.form-control {
+  width: 100%;
+  padding: 12px 15px;
+  border: var(--border-default);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: var(--font-primary);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card-body {
+    padding: 25px 20px;
+  }
+  
+  .card-header {
+    padding: 25px 20px;
+  }
+}

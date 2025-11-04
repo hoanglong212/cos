@@ -1,0 +1,97 @@
+/* css/step1.css */
+@import 'base.css';
+
+/* ===================== */
+/* 🎯 STYLES RIÊNG CHO STEP 1 */
+/* ===================== */
+
+/* Step 1 specific styles */
+#competition-field {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+#competition-field.show {
+  max-height: 100px;
+  opacity: 1;
+  margin-top: 15px;
+}
+
+/* Custom select styling */
+select.form-control {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23667eea' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 12px;
+  appearance: none;
+}
+
+/* Form groups cho Step 1 (Đã chuyển từ style.css) */
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1rem;
+}
+
+/* Gộp chung với .form-control của base.css, nhưng giữ lại các style riêng */
+.form-group select,
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e1e5ee; /* Dùng var(--border-default) từ base.css */
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.form-group select:focus,
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-500);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Submit button cho Step 1 (Đã chuyển từ style.css) */
+.submit-btn {
+    background: var(--gradient-success); /* Đã sửa tên biến */
+    color: white;
+    border: none;
+    padding: 16px 30px;
+    border-radius: var(--radius-md);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
+    font-family: var(--font-primary);
+}
+
+.submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(39, 174, 96, 0.4);
+}
+
+/* Optgroup styling (Đã chuyển từ style.css) */
+optgroup {
+    font-weight: 700;
+    color: var(--primary-500);
+    background: #f8f9fa;
+}
+
+optgroup option {
+    font-weight: normal;
+    color: #333;
+    padding: 8px 12px;
+}

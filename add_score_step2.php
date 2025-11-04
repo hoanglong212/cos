@@ -187,13 +187,7 @@ if ($history_stmt) {
 <head>
     <meta charset="UTF-8">
     <title>Thêm điểm - Bước 2</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="style_step2.css">
-    <link rel="stylesheet" href="variables.css">
-    <link rel="stylesheet" href="base.css">
-    <link rel="stylesheet" href="components.css">
-    
-    
+    <link rel="stylesheet" href="style.css"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body class="main-wrapper-step2">
