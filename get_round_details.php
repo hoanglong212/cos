@@ -1,6 +1,9 @@
 <?php
-// Tắt báo lỗi notice (vì file này chỉ trả về JSON)
-error_reporting(E_ALL & ~E_NOTICE);
+// Bật hiển thị lỗi để gỡ lỗi
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 include 'connect.php';
 
 // 1. Lấy round_id từ request
@@ -13,7 +16,6 @@ $round_id = intval($_GET['round_id']);
 
 // 2. Chuẩn bị câu truy vấn an toàn (Prepared Statement)
 // Câu lệnh này lấy tất cả các cự ly (ranges) thuộc về một round,
-// sắp xếp theo thứ tự (giả sử là 'range_order' trong bảng join)
 $sql = "SELECT
             rc.range_category_id,
             rc.name AS range_name,
@@ -26,10 +28,9 @@ $sql = "SELECT
         JOIN
             range_category rc ON rcd.range_category_id = rc.range_category_id
         WHERE
-            r.round_id = ?
-        ORDER BY
-            rcd.detail_id ASC"; // Sắp xếp theo thứ tự được thêm vào (giả sử)
-            // LƯU Ý: Sẽ tốt hơn nếu bảng 'round_category_details' có cột 'range_order' (thứ tự 1, 2, 3...)
+            r.round_id = ?";
+            
+// (Lưu ý: Chúng ta đã gỡ bỏ 'ORDER BY' bị lỗi trước đó)
 
 $stmt = $conn->prepare($sql);
 if (!$stmt) {
@@ -39,10 +40,16 @@ if (!$stmt) {
 }
 
 $stmt->bind_param("i", $round_id);
-$stmt->execute();
-$result = $stmt->get_result();
 
+if (!$stmt->execute()) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Lỗi thực thi SQL: ' . $stmt->error]);
+    exit;
+}
+
+$result = $stmt->get_result();
 $ranges = [];
+
 if ($result) {
     while ($row = $result->fetch_assoc()) {
         // Đảm bảo kiểu dữ liệu là số
@@ -50,10 +57,6 @@ if ($result) {
         $row['number_of_ends'] = intval($row['number_of_ends']);
         $ranges[] = $row;
     }
-} else {
-    http_response_code(500);
-    echo json_encode(['error' => 'Lỗi thực thi SQL: ' . $stmt->error]);
-    exit;
 }
 
 $stmt->close();
