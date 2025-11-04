@@ -1,0 +1,30 @@
+/* ===================== */
+/* 🎯 STYLES RIÊNG CHO STEP 1 */
+/* ===================== */
+
+/* Hiệu ứng cho competition field */
+#competition-field {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+#competition-field.show {
+  max-height: 100px;
+  opacity: 1;
+  margin-top: 15px;
+}
+
+/* Optgroup styling */
+optgroup {
+  font-weight: 700;
+  color: var(--primary-500);
+  background: #f8f9fa;
+}
+
+optgroup option {
+  font-weight: normal;
+  color: #333;
+  padding: 8px 12px;
+}

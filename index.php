@@ -34,6 +34,6 @@
       }
     ?>
   </table>
-  <a href="add_score.php" class="btn">➕ Nhập điểm mới</a>
+  <a href="add_score_step1.php" class="btn">➕ Nhập điểm mới</a>
 </body>
 </html>
