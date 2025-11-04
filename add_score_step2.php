@@ -189,6 +189,11 @@ if ($history_stmt) {
     <title>Thêm điểm - Bước 2</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="style_step2.css">
+    <link rel="stylesheet" href="variables.css">
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="components.css">
+    
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body class="main-wrapper-step2">
@@ -200,7 +205,7 @@ if ($history_stmt) {
         <div class="card-header-step2">
             <!-- NÚT QUAY LẠI GÓC PHẢI -->
             <div class="back-button-container">
-                <a href="step1.php" class="back-button">Quay lại Bước 1</a>
+                <a href="add_score_step1.php" class="back-button">Quay lại Bước 1</a>
             </div>
 
            

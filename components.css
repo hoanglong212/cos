@@ -1,0 +1,75 @@
+@import 'variables.css';
+
+/* Info Box Component */
+.info-box {
+  background: var(--bg-info);
+  border: var(--border-info);
+  border-radius: var(--radius-lg);
+  padding: 25px;
+  margin-bottom: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+.info-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 100%;
+  background: linear-gradient(135deg, #2e4ba4 0%, #4a6fdc 100%);
+}
+
+/* Warning Box Component */
+.warning-box {
+  background: var(--gradient-warning);
+  border: var(--border-warning);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin: 25px 0;
+  position: relative;
+}
+
+.warning-box::before {
+  content: '💡';
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  font-size: 1.5rem;
+}
+
+.warning-box p {
+  margin: 0;
+  padding-left: 40px;
+  text-align: left;
+  color: #8a6d3b;
+  line-height: 1.6;
+}
+
+/* Fieldset Component */
+.fieldset-modern {
+  border: var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: 25px;
+  margin-bottom: 25px;
+  background: #fafbfc;
+  transition: all 0.3s ease;
+}
+
+.fieldset-modern:hover {
+  border-color: #c3cfe2;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.fieldset-modern legend {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary-500);
+  padding: 8px 15px;
+  background: white;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: var(--border-default);
+}

@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <title>Thêm điểm - Bước 1</title>
     <!-- LIÊN KẾT ĐẾN CÁC TỆP CSS -->
-    <link rel="stylesheet" href="style.css"> <!-- CSS chung -->
+    <link rel="stylesheet" href="variables.css">
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="style_step1.css"> <!-- CSS riêng cho bước 1 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>

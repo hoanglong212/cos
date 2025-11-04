@@ -25,7 +25,7 @@ function displayError($message, $details = '', $preserved_data = []) {
             </div>
             
             <div class='btn-group'>
-                <a href='add_score.php' class='btn btn-primary'>Quay lại nhập điểm</a>
+                <a href='add_score_step1.php' class='btn btn-primary'>Quay lại nhập điểm</a>
                 <a href='index.php' class='btn btn-secondary'>Về trang chủ</a>
             </div>
             
@@ -72,7 +72,7 @@ function displaySuccess($score_id, $total_score, $date_recorded) {
             
             <div class='btn-group'>
                 <a href='view_scores.php?new_score_id=$score_id' class='btn btn-primary'>Xem chi tiết điểm</a>
-                <a href='add_score.php' class='btn btn-primary'>Nhập điểm mới</a>
+                <a href='add_score_step1.php' class='btn btn-primary'>Nhập điểm mới</a>
                 <a href='index.php' class='btn btn-secondary'>Về trang chủ</a>
             </div>
         </div>

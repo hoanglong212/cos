@@ -1,5 +1,155 @@
 /* ===================== */
-/* 🎯 STYLES RIÊNG CHO STEP 2 - ĐÃ SỬA LỖI HIỂN THỊ */
+/* 🎯 CSS VARIABLES */
+/* ===================== */
+:root {
+  /* Colors */
+  --success-500: #27ae60;
+  --success-400: #2ecc71;
+  --info-500: #3498db;
+  --info-400: #2980b9;
+  --primary-500: #667eea;
+  --warning-500: #f39c12;
+  
+  /* Gradients */
+  --success-gradient: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+  --info-gradient: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  
+  /* Backgrounds */
+  --warning-bg: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+  --info-bg: linear-gradient(135deg, #e8f4fd 0%, #d1ecf1 100%);
+  
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  
+  /* Shadows */
+  --shadow-md: 0 8px 25px rgba(0,0,0,0.08);
+  --shadow-lg: 0 15px 40px rgba(0,0,0,0.1);
+}
+
+/* ===================== */
+/* 🎯 STYLES CHUNG CHO CẢ STEP 1 VÀ STEP 2 */
+/* ===================== */
+
+/* Main wrapper cho Step 1 */
+.main-wrapper {
+    min-height: 100vh;
+    padding: 20px;
+    background: var(--primary-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Form card cho Step 1 */
+.form-card {
+    background: white;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Card header cho Step 1 */
+.card-header {
+    background: var(--primary-gradient);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+.card-header h1 {
+    margin: 0 0 10px 0;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.card-header p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 1.1rem;
+}
+
+/* Card body cho Step 1 */
+.card-body {
+    padding: 40px;
+}
+
+/* Form groups cho Step 1 */
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1rem;
+}
+
+.form-group select,
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e1e5ee;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.form-group select:focus,
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-500);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Submit button cho Step 1 */
+.submit-btn {
+    background: var(--success-gradient);
+    color: white;
+    border: none;
+    padding: 16px 30px;
+    border-radius: var(--radius-md);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
+    font-family: 'Inter', sans-serif;
+}
+
+.submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(39, 174, 96, 0.4);
+}
+
+/* Optgroup styling */
+optgroup {
+    font-weight: 700;
+    color: var(--primary-500);
+    background: #f8f9fa;
+}
+
+optgroup option {
+    font-weight: normal;
+    color: #333;
+    padding: 8px 12px;
+}
+
+/* ===================== */
+/* 🎯 STYLES RIÊNG CHO STEP 2 */
 /* ===================== */
 
 /* Success header variant */
@@ -14,7 +164,7 @@
   border-radius: var(--radius-xl);
   padding: 30px;
   margin: 30px 0;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-lg);
   position: relative;
   overflow: hidden;
 }
@@ -47,7 +197,7 @@
   font-size: 1.6em;
 }
 
-/* Stats grid - ĐÃ SỬA LỖI */
+/* Stats grid */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -127,7 +277,7 @@
   color: white;
 }
 
-/* Progress bar - ĐÃ SỬA LỖI */
+/* Progress bar */
 .score-progress {
   margin: 25px 0;
 }
@@ -334,7 +484,7 @@
 }
 
 .calculate-btn {
-  background: linear-gradient(135deg, var(--info-500) 0%, var(--info-400) 100%);
+  background: var(--info-gradient);
   color: white;
   border: none;
   padding: 18px 30px;
@@ -454,12 +604,12 @@
 }
 
 /* ===================== */
-/* 🎯 FIX LỖI HIỂN THỊ - PHẦN QUAN TRỌNG */
+/* 🎯 FIX LỖI HIỂN THỊ */
 /* ===================== */
 
 /* Fix lỗi hiển thị help box */
 .help-box-modern {
-  background: linear-gradient(135deg, #fff9e6 0%, #ffeaa7 100%);
+  background: var(--warning-bg);
   border: 2px solid #fdcb6e;
   border-radius: 12px;
   padding: 20px;
@@ -587,7 +737,7 @@
 
 /* Fix lỗi submit button */
 .submit-btn-step2 {
-  background: linear-gradient(135deg, var(--success-500) 0%, var(--success-400) 100%);
+  background: var(--success-gradient);
   color: white;
   border: none;
   padding: 18px 50px;
@@ -624,6 +774,119 @@
 
 .submit-btn-step2:hover::after {
   transform: translateY(-50%) scale(1.2);
+}
+
+/* VALIDATION STYLES */
+.validation-summary {
+  background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+  border: 2px solid #fdcb6e;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  font-family: 'Inter', sans-serif;
+}
+
+.validation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.validation-header h5 {
+  margin: 0;
+  color: #8a6d3b;
+  font-size: 1.1rem;
+}
+
+.validation-header button {
+  background: #8a6d3b;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.validation-content ul {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.validation-content li {
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+.validation-content code {
+  background: #fff3cd;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+  border: 1px solid #fdcb6e;
+}
+
+/* VALIDATION STATES */
+.end-input-modern.valid {
+  border-color: #27ae60 !important;
+  background-color: #f0f9f4 !important;
+}
+
+.end-input-modern.invalid {
+  border-color: #e74c3c !important;
+  background-color: #fdf2f2 !important;
+}
+
+.error-box {
+  background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+  border: 2px solid #e74c3c;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  color: #721c24;
+}
+
+.error-box h4 {
+  margin: 0 0 15px 0;
+  font-size: 1.2rem;
+}
+
+.error-box ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.error-box li {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+/* PROGRESS INDICATOR */
+.completion-progress {
+  margin: 15px 0;
+  font-size: 0.9rem;
+  color: #7f8c8d;
+}
+
+.progress-text {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.progress-bar-small {
+  height: 6px;
+  background: #e9ecef;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill-small {
+  height: 100%;
+  background: var(--success-gradient);
+  border-radius: 3px;
+  transition: width 0.3s ease;
 }
 
 /* Fix responsive */
@@ -702,11 +965,11 @@
 
 /* Đảm bảo card header có position relative */
 .card-header-step2 {
-  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+  background: var(--success-gradient);
   color: white;
   padding: 30px;
   text-align: center;
   position: relative;
   overflow: hidden;
   font-family: 'Inter', sans-serif;
-}
+} 
