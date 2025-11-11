@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swinburne Archery Club - Score Recording System</title>
+    <link rel="stylesheet" href="home.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Thêm CSS variables nếu chưa có trong home.css */
+        :root {
+            --primary-500: #3498db;
+            --primary-400: #5dade2;
+            --gradient-primary: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            --gradient-success: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            --gradient-info: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            --gradient-warning: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+        }
+        
+        /* Placeholder styles cho hình ảnh */
+        .hero-image-placeholder {
+            width: 100%;
+            height: 400px;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .about-image-placeholder {
+            width: 100%;
+            height: 300px;
+            background: var(--gradient-info);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .round-image-placeholder {
+            width: 100%;
+            height: 120px;
+            background: #f8f9fa;
+            border-radius: var(--radius-md);
+            padding: 0.5rem;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .equipment-placeholder {
+            height: 150px;
+            background: #34495e;
+            color: #ccc;
+            border-radius: var(--radius-lg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #5d6d7e;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <img src="assets/logo.png" alt="" class="logo">
+                
+                <span>Swinburne Archery Club</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li><a href="#score-recording" class="nav-link active">Score Recording</a></li>
+                <li><a href="#competitions" class="nav-link">Competitions</a></li>
+                <li><a href="#rounds" class="nav-link">Rounds & Distances</a></li>
+                <li><a href="#results" class="nav-link">Results</a></li>
+                <li><a href="#members" class="nav-link">Members</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+            </ul>
+            
+            <div class="nav-auth">
+                <!-- Thay đổi button thành thẻ a để liên kết -->
+                <a href="login.php" class="btn-login">Archer Login</a>
+                <a href="register.php" class="btn-register">Join Club</a>
+            </div>
+            
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>ARCHERY SCORE RECORDING SYSTEM</h1>
+            <p><strong>Since 1935.</strong><br>
+            Professional score tracking and competition management for Swinburne Archery Club. Record, analyze, and compete with precision.</p>
+            
+            <div class="hero-buttons">
+                <!-- Thêm liên kết cho các nút -->
+                <a href="login.php" class="btn-primary">Record New Score</a>
+                <a href="#results" class="btn-secondary">View Competition Results</a>
+            </div>
+            
+            <div class="quick-stats">
+                <div class="stat-item">
+                    <h3>144+</h3>
+                    <p>Arrows per Round</p>
+                </div>
+                <div class="stat-item">
+                    <h3>20-90m</h3>
+                    <p>Distance Range</p>
+                </div>
+                <div class="stat-item">
+                    <h3>5 Divisions</h3>
+                    <p>Equipment Types</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hero-image">
+            <img src="assets/hero-.webp" alt="" class="hero-image-placeholder">
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="about">
+        <div class="container">
+            <h2 class="section-title">SCORE RECORDING FEATURES</h2>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <i class="fas fa-mobile-alt"></i>
+                            <div>
+                                <h4>Mobile Score Entry</h4>
+                                <p>Record scores on handheld devices with our intuitive interface</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <i class="fas fa-trophy"></i>
+                            <div>
+                                <h4>Competition Management</h4>
+                                <p>Manage WA rounds, equivalents, and club championships</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <i class="fas fa-chart-line"></i>
+                            <div>
+                                <h4>Personal Bests & Analytics</h4>
+                                <p>Track PB scores and performance trends over time</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-image">
+                   <img src="assets/club activity.jpg" alt="" class="about-image-placeholder">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rounds & Distances Section -->
+    <section class="news">
+        <div class="container">
+            <h2 class="section-title">STANDARD ROUNDS & DISTANCES</h2>
+            
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="news-image" style="background: var(--gradient-primary); color: white;">
+                        <i class="fas fa-flag"></i>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-date">WA Standard Rounds</div>
+                        <h3 class="news-title">WA90/1440 Round</h3>
+                        <img src="assets/images.jpg" alt="" class="round-image-placeholder" width="100%"  height="50%">
+                        <p class="news-excerpt">36 arrows at 90m, 70m, 60m, 50m, 40m, 30m. Total 144 arrows, max score 1440.</p>
+                        <a href="#" class="read-more">View Details</a>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="news-image" style="background: var(--gradient-success); color: white;">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-date">Competition Rounds</div>
+                        <h3 class="news-title">WA720 Round</h3>
+                        <img src="assets/WA720 Round.png" alt="" class="fas round-image-placeholder">
+                        <p class="news-excerpt">2 ranges of 6 ends at 70m. Standard Olympic round format.</p>
+                        <a href="#" class="read-more">View Details</a>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="news-image" style="background: var(--gradient-info); color: white;">
+                        <i class="fas fa-city"></i>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-date">Australian Rounds</div>
+                        <h3 class="news-title">Sydney & Brisbane</h3>
+                        <img src="assets/Sydney & Brisbane.png" alt="" class="fas round-image-placeholder">
+                        <p class="news-excerpt">Named after Australian cities with specific distance combinations.</p>
+                        <a href="#" class="read-more">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Equipment & Categories Section -->
+    <section class="about" style="background: #2c3e50; color: white;">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">EQUIPMENT DIVISIONS & CATEGORIES</h2>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <div class="categories-grid">
+                        
+                            <ul class="category-list">
+                                <li><i class="fas fa-check"></i> Recurve</li>
+                                <li><i class="fas fa-check"></i> Compound</li>
+                                <li><i class="fas fa-check"></i> Recurve Barebow</li>
+                                <li><i class="fas fa-check"></i> Compound Barebow</li>
+                                <li><i class="fas fa-check"></i> Longbow</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 style="color: white; margin-bottom: 1rem;">Age Categories</h4>
+                            <ul class="category-list">
+                                <li><i class="fas fa-user"></i> Open Male/Female</li>
+                                <li><i class="fas fa-user-plus"></i> 50+/60+/70+</li>
+                                <li><i class="fas fa-user-graduate"></i> Under 21/18/16/14</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="category-note">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Each archer competes within their specific category (e.g., "Male Open Compound")</p>
+                    </div>
+                </div>
+                
+                <div class="about-image">
+                    <div img class="equipment-placeholder" style="height: 300px;">
+                        <img src="assets/equipment.jpg" alt="">
+                        <i class="fas fa-bow-arrow" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <div>Equipment Classification</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Actions Section -->
+    <section class="news">
+        <div class="container">
+            <h2 class="section-title">QUICK ACTIONS</h2>
+            
+            <div class="news-grid">
+                <!-- Thêm liên kết cho action cards -->
+                <a href="login.php" class="action-card">
+                    <div class="news-image" style="background: var(--gradient-warning); color: white;">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title">Enter New Score</h3>
+                        <p class="news-excerpt">Record your practice or competition scores</p>
+                    </div>
+                </a>
+                
+                <a href="#results" class="action-card">
+                    <div class="news-image" style="background: var(--gradient-info); color: white;">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title">View Results</h3>
+                        <p class="news-excerpt">Check competition results and rankings</p>
+                    </div>
+                </a>
+                
+                <a href="#championship" class="action-card">
+                    <div class="news-image" style="background: var(--gradient-success); color: white;">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title">Club Championship</h3>
+                        <p class="news-excerpt">Track yearly championship progress</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <section class="about" style="background: #f8f9fa;">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>Swinburne Archery Club</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Lower Arroyo Park, Pasadena, California</p>
+                    <p><i class="fas fa-clock"></i> Practice: Tue & Thu 5-8PM, Sat 9AM-12PM</p>
+                </div>
+                <div class="footer-section">
+                    <h4>CONTACT</h4>
+                    <p><i class="fas fa-envelope"></i> score.recording@rovingarchers.org</p>
+                    <p><i class="fas fa-phone"></i> (626) 555-ARCHERY</p>
+                </div>
+                <div class="footer-section">
+                    <h4>QUICK LINKS</h4>
+                    <p><a href="login.php" style="color: #666; text-decoration: none;"><i class="fas fa-sign-in-alt"></i> Archer Login</a></p>
+                    <p><a href="register.php" style="color: #666; text-decoration: none;"><i class="fas fa-user-plus"></i> Join Club</a></p>
+                    <p><a href="#about" style="color: #666; text-decoration: none;"><i class="fas fa-info-circle"></i> About Us</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Archery Score Recording System © 2024 - Following World Archery & Archery Australia Standards</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
