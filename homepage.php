@@ -566,7 +566,7 @@ if (($user_role == 'recorder' || $user_role == 'admin') && $is_logged_in) {
                 <div class="news-grid">
                     <a href="recorder/scores.php" class="news-card action-card">
                         <div class="news-image">
-                            <img src="assets/competition.jpg" alt="Manage Scores" class="round-img">
+                            <img src="assets/manage score.jpg" alt="Manage Scores" class="round-img">
                         </div>
                         <div class="news-content">
                             <h3 class="news-title">Manage Scores</h3>
@@ -577,7 +577,7 @@ if (($user_role == 'recorder' || $user_role == 'admin') && $is_logged_in) {
                     
                     <a href="recorder/archers.php" class="news-card action-card">
                         <div class="news-image">
-                            <img src="assets/users.jpg" alt="Manage Members" class="round-img">
+                            <img src="assets/members.png" alt="Manage Members" class="round-img">
                         </div>
                         <div class="news-content">
                             <h3 class="news-title">Manage Members</h3>
@@ -588,7 +588,7 @@ if (($user_role == 'recorder' || $user_role == 'admin') && $is_logged_in) {
                     
                     <a href="recorder/rounds.php" class="news-card action-card">
                         <div class="news-image">
-                            <img src="assets/WA720 Round.png" alt="Manage Rounds" class="round-img">
+                            <img src="assets/round.jpg" alt="Manage Rounds" class="round-img">
                         </div>
                         <div class="news-content">
                             <h3 class="news-title">Manage Rounds</h3>
