@@ -1,0 +1,19 @@
+/*
+ * File: main.css
+ * Mục đích: Sử dụng duy nhất file này trong HTML để load tất cả các style.
+ */
+
+/* 1. Import Variables (Luôn luôn là đầu tiên) */
+@import 'css/variables.css';
+
+/* 2. Import Base Styles */
+@import 'css/base.css';
+
+/* 3. Import Styles dùng chung, tái sử dụng (Đã tách ra thành components logic nhất) */
+@import 'css/components.css';
+
+@import 'css/style_step2.css';
+
+/* 5. Import Step 2 Specific Styles */
+
+

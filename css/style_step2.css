@@ -1,3 +1,4 @@
+/* style_step2.css - GIỮ NGUYÊN TẤT CẢ TÍNH NĂNG */
 @import 'base.css';
 @import 'components.css';
 
@@ -30,7 +31,7 @@
     box-shadow: var(--shadow-xl);
     overflow: hidden;
     width: 100%;
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
     position: relative;
     z-index: 1;
@@ -339,7 +340,7 @@
   color: white;
 }
 
-/* Progress bar (lớn) */
+/* Progress bar */
 .score-progress {
   margin: 25px 0;
 }
@@ -354,7 +355,7 @@
   font-family: var(--font-primary);
 }
 
-.progress-bar {
+.progress-container {
   height: 10px;
   background: #e9ecef;
   border-radius: 10px;
@@ -514,7 +515,7 @@
   font-family: var(--font-primary);
 }
 
-/* Achievement badges (layout) */
+/* Achievement badges */
 .achievement-badges {
   display: flex;
   gap: 15px;
@@ -524,10 +525,281 @@
 }
 
 /* ================================== */
+/* MODERN SCORING INTERFACE STYLES */
+/* ================================== */
+
+.scoring-grid-modern {
+    display: grid;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.range-fieldset {
+    border: 2px solid #e3f2fd;
+    border-radius: 16px;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f8fbff 0%, #f0f7ff 100%);
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.range-fieldset:hover {
+    border-color: #2196f3;
+    box-shadow: 0 8px 30px rgba(33, 150, 243, 0.15);
+    transform: translateY(-2px);
+}
+
+.range-fieldset legend {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #1565c0;
+    padding: 0 1.5rem;
+    background: linear-gradient(135deg, #2196f3, #1976d2);
+    color: white;
+    border-radius: 50px;
+    margin-left: -1rem;
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+    border: none;
+}
+
+.ends-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.end-card {
+    background: white;
+    border: 1px solid #e1f5fe;
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.end-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(135deg, #2196f3, #1976d2);
+    transition: width 0.3s ease;
+}
+
+.end-card:hover::before {
+    width: 6px;
+}
+
+.end-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(33, 150, 243, 0.15);
+}
+
+.end-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #f0f7ff;
+}
+
+.end-number {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #1976d2;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.end-number::before {
+    content: '🎯';
+    font-size: 1rem;
+}
+
+.arrows-count {
+    background: #e3f2fd;
+    color: #1976d2;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.end-input-modern {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 2px solid #e3f2fd;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s ease;
+    background: #fafdff;
+    color: #1976d2;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+}
+
+.end-input-modern:focus {
+    outline: none;
+    border-color: #2196f3;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+    transform: scale(1.02);
+}
+
+.end-input-modern::placeholder {
+    color: #90caf9;
+    font-weight: 500;
+    text-transform: none;
+}
+
+.input-hint {
+    text-align: center;
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: #78909c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.input-hint::before {
+    content: '💡';
+}
+
+/* RANGE SELECTOR STYLES */
+.range-selector-modern {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    color: white;
+    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.3);
+}
+
+.range-selector-modern h4 {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.range-selector-modern h4::before {
+    content: '🎯';
+}
+
+.range-options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.range-option-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 1.25rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.range-option-card:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.range-option-card.selected {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+}
+
+.range-checkbox-modern {
+    display: none;
+}
+
+.range-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.range-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.range-distance {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.range-details {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.range-ends {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.hidden-range {
+    display: none;
+}
+
+/* QUICK ACTIONS */
+.quick-actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.quick-btn {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+    font-family: var(--font-primary);
+}
+
+.quick-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+}
+
+.quick-btn.secondary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* ================================== */
 /* SECTION FORM CỦA STEP 2 */
 /* ================================== */
 
-/* Fix lỗi hiển thị help box */
+/* Help box */
 .help-box-modern {
   background: var(--gradient-warning);
   border: var(--border-warning);
@@ -564,97 +836,6 @@
   border: 1px solid #fdcb6e;
 }
 
-/* Fix lỗi hiển thị range fieldset */
-.range-fieldset {
-  border: var(--border-default);
-  border-radius: 16px;
-  padding: 25px;
-  margin-bottom: 25px;
-  background: #fafbfc;
-  transition: all 0.3s ease;
-  position: relative;
-  font-family: var(--font-primary);
-}
-
-.range-fieldset:hover {
-  border-color: #c3cfe2;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-  transform: translateY(-2px);
-}
-
-.range-fieldset legend {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--primary-500);
-  padding: 8px 15px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  border: var(--border-default);
-  font-family: var(--font-primary);
-  white-space: normal;
-  line-height: 1.4;
-}
-
-/* Fix lỗi end rows */
-.end-row-modern {
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  gap: 15px;
-  align-items: center;
-  margin-bottom: 15px;
-  padding: 12px;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-  background: white;
-  border: 1px solid #f8f9fa;
-  font-family: var(--font-primary);
-}
-
-.end-row-modern:hover {
-  background: #f8f9fa;
-  border-color: #e1e5ee;
-  transform: translateX(5px);
-}
-
-.end-row-modern label {
-  font-weight: 600;
-  color: #555;
-  margin: 0;
-  text-align: right;
-  padding-right: 10px;
-  font-size: 0.95rem;
-  font-family: var(--font-primary);
-  display: block;
-}
-
-.end-input-modern {
-  font-family: var(--font-mono);
-  font-size: 1.1em;
-  font-weight: bold;
-  padding: 12px 15px;
-  border: var(--border-default);
-  border-radius: 10px;
-  background: white;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  width: 100%;
-  display: block;
-}
-
-.end-input-modern:focus {
-  outline: none;
-  border-color: var(--success-500);
-  box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
-  transform: translateY(-2px);
-}
-
-.end-input-modern::placeholder {
-  text-transform: none;
-  opacity: 0.6;
-  font-size: 0.9em;
-}
-
 /* FORM BUTTONS */
 .form-buttons {
     display: grid;
@@ -689,7 +870,6 @@
     font-size: 1.1em;
 }
 
-/* Fix lỗi submit button */
 .submit-btn-step2 {
   background: var(--gradient-success);
   color: white;
@@ -730,7 +910,7 @@
   transform: translateY(-50%) scale(1.2);
 }
 
-/* VALIDATION STATES (Trạng thái của input) */
+/* VALIDATION STATES */
 .end-input-modern.valid {
   border-color: var(--success-500) !important;
   background-color: #f0f9f4 !important;
@@ -741,7 +921,7 @@
   background-color: #fdf2f2 !important;
 }
 
-/* ANIMATIONS (cho layout) */
+/* ANIMATIONS */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -772,7 +952,7 @@
     animation: slideInUp 0.8s ease-out;
 }
 
-/* RESPONSIVE (của Step 2) */
+/* RESPONSIVE */
 @media (max-width: 768px) {
     .main-wrapper-step2 {
         padding: 10px;
@@ -790,14 +970,13 @@
         font-size: 1.5rem;
     }
     
-    .end-row-modern {
-      grid-template-columns: 1fr;
-      gap: 8px;
+    .ends-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
     }
     
-    .end-row-modern label {
-      text-align: left;
-      padding-right: 0;
+    .end-card {
+        padding: 1.25rem;
     }
     
     .summary-box-modern ul {
@@ -836,7 +1015,7 @@
 
     .range-fieldset legend {
       font-size: 1rem;
-      padding: 6px 12px;
+      padding: 0 1rem;
       white-space: normal;
       line-height: 1.3;
     }
@@ -858,6 +1037,19 @@
     .stat-value.total {
       font-size: 2.4rem;
     }
+    
+    .range-options-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .quick-actions {
+        flex-direction: column;
+    }
+    
+    .quick-btn {
+        text-align: center;
+        justify-content: center;
+    }
 }
 
 @media (max-width: 480px) {
@@ -871,11 +1063,25 @@
     }
     
     .range-fieldset {
-        padding: 20px 15px;
+        padding: 1.5rem 1rem;
     }
     
     .range-fieldset legend {
         font-size: 1rem;
-        padding: 6px 12px;
+        padding: 0 1rem;
+    }
+    
+    .range-selector-modern {
+        padding: 1.5rem;
+    }
+    
+    .end-header {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+    
+    .arrows-count {
+        align-self: flex-end;
     }
 }
