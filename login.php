@@ -6,7 +6,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
     $username = trim($_POST["username"]);
     $password = $_POST["password"];
 
-    $stmt = $conn->prepare("SELECT * FROM user_table WHERE username = ?");
+    $stmt = $conn->prepare("SELECT u.*, r.role_name 
+                           FROM user_table u 
+                           LEFT JOIN user_roles ur ON u.user_id = ur.user_id 
+                           LEFT JOIN roles r ON ur.role_id = r.role_id 
+                           WHERE u.username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -20,8 +24,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
             $_SESSION["first_name"] = $user["first_name"];
             $_SESSION["last_name"] = $user["last_name"];
             $_SESSION["email"] = $user["email"];
+            $_SESSION["role"] = $user["role_name"] ?? 'archer'; // FIX: Thêm giá trị mặc định
             
-            header("Location: homepage.php");
+            // DEBUG: Hiển thị role để kiểm tra
+            // echo "Debug: Role = " . $_SESSION["role"] . " - Redirecting...";
+            
+            // Chuyển hướng dựa trên role
+            if ($user["role_name"] == 'recorder' || $user["role_name"] == 'admin') {
+                header("Location: view_score_recorder.php");
+            } else {
+                header("Location: homepage.php");
+            }
             exit;
         } else {
             $error = "❌ Incorrect password.";
@@ -82,6 +95,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["login"])) {
             <div class="links-container">
                 <p>Don't have an account? <a href="register.php">Register</a></p>
                 <p>Go back to <a href="homepage.php">Homepage</a></p>
+                <p style="margin-top: 10px;">
+                    <a href="recorder_login.php" style="color: #e67e22; font-weight: bold;">
+                        <i class="fas fa-user-shield"></i> Recorder Login
+                    </a>
+                </p>
             </div>
         </div>
     </div>

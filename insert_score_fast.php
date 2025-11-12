@@ -2,13 +2,13 @@
 // insert_score.php
 include 'connect.php';
 
-// BẬT HIỂN THỊ LỖI ĐỂ DEBUG
+// ENABLE ERROR DISPLAY FOR DEBUGGING
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// HÀM HIỂN THỊ LỖI CHI TIẾT
+// FUNCTION TO DISPLAY DETAILED ERRORS
 function displayError($message, $details = '') {
-    // Xử lý chi tiết lỗi để hiển thị đẹp hơn
+    // Process error details for better display
     $details_html = "";
     if ($details) {
         $error_lines = explode("\n", $details);
@@ -17,7 +17,7 @@ function displayError($message, $details = '') {
         foreach ($error_lines as $line) {
             $line = trim($line);
             if (!empty($line)) {
-                // Xử lý dòng lỗi để hiển thị đẹp hơn
+                // Process error line for better display
                 if (strpos($line, "•") === 0) {
                     $formatted_errors[] = $line;
                 } else {
@@ -29,21 +29,21 @@ function displayError($message, $details = '') {
         if (!empty($formatted_errors)) {
             $details_html = "
             <div class='error-details'>
-                <div class='error-summary'>Chi tiết lỗi:</div>
+                <div class='error-summary'>Error details:</div>
                 <ul class='error-list'>
             ";
             
-            // Giới hạn hiển thị 10 lỗi đầu tiên để tránh quá dài
+            // Limit display to first 10 errors to avoid being too long
             $display_errors = array_slice($formatted_errors, 0, 10);
             foreach ($display_errors as $error) {
-                $clean_error = str_replace("•", "", $error); // Loại bỏ ký tự • gốc
+                $clean_error = str_replace("•", "", $error); // Remove original • character
                 $details_html .= "<li class='error-item'>• " . htmlspecialchars(trim($clean_error)) . "</li>";
             }
             
-            // Thông báo nếu có nhiều lỗi hơn
+            // Notification if there are more errors
             if (count($formatted_errors) > 10) {
                 $remaining = count($formatted_errors) - 10;
-                $details_html .= "<li class='error-item-more'>... và $remaining lỗi khác</li>";
+                $details_html .= "<li class='error-item-more'>... and $remaining other errors</li>";
             }
             
             $details_html .= "
@@ -55,11 +55,11 @@ function displayError($message, $details = '') {
     
     echo "
     <!DOCTYPE html>
-    <html lang='vi'>
+    <html lang='en'>
     <head>
         <meta charset='UTF-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-        <title>Lỗi Nhập Điểm</title>
+        <title>Score Entry Error</title>
         <link rel='stylesheet' href='main.css'>
         <style>
             /* Additional styles for error page */
@@ -271,7 +271,7 @@ function displayError($message, $details = '') {
         <div class='error-container'>
             <div class='error-header'>
                 <div class='error-icon'>⚠️</div>
-                <h1 class='error-title'>Có lỗi xảy ra</h1>
+                <h1 class='error-title'>An Error Occurred</h1>
             </div>
             
             <div class='error-message'>
@@ -283,19 +283,19 @@ function displayError($message, $details = '') {
             <div class='error-tips'>
                 <div class='tips-title'>
                     <span>💡</span>
-                    Mẹo nhập điểm:
+                    Score Entry Tips:
                 </div>
                 <ul class='tips-list'>
-                    <li class='tip-item'>Chọn đầy đủ thông tin người bắn và vòng thi</li>
-                    <li class='tip-item'>Kiểm tra điểm từng mũi tên (0-10, X, M)</li>
-                    <li class='tip-item'>Đảm bảo phân loại cung thủ và dụng cụ được chọn đúng</li>
-                    <li class='tip-item'>Nếu lỗi tiếp tục, hãy liên hệ quản trị viên</li>
+                    <li class='tip-item'>Select complete shooter and round information</li>
+                    <li class='tip-item'>Check each arrow score (0-10, X, M)</li>
+                    <li class='tip-item'>Ensure archer classification and equipment are correctly selected</li>
+                    <li class='tip-item'>If errors persist, contact administrator</li>
                 </ul>
             </div>
 
             <div class='error-actions'>
-                <a href='javascript:history.back()' class='btn btn-primary'>Quay lại nhập điểm</a>
-                <a href='homepage.html' class='btn btn-secondary'>Về trang chủ</a>
+                <a href='javascript:history.back()' class='btn btn-primary'>Back to Score Entry</a>
+                <a href='homepage.html' class='btn btn-secondary'>Return to Homepage</a>
             </div>
         </div>
     </body>
@@ -304,17 +304,17 @@ function displayError($message, $details = '') {
     exit;
 }
 
-// HÀM HIỂN THỊ THÀNH CÔNG (giữ nguyên)
+// SUCCESS DISPLAY FUNCTION (keep same structure)
 function displaySuccess($score_id, $total_score, $date_recorded, $context) {
-    $loai_diem = ($context === 'competition') ? 'Thi đấu' : 'Luyện tập';
+    $score_type = ($context === 'competition') ? 'Competition' : 'Practice';
     
     echo "
     <!DOCTYPE html>
-    <html lang='vi'>
+    <html lang='en'>
     <head>
         <meta charset='UTF-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-        <title>Thành Công</title>
+        <title>Success</title>
         <style>
             body { 
                 font-family: Arial, sans-serif; 
@@ -346,22 +346,22 @@ function displaySuccess($score_id, $total_score, $date_recorded, $context) {
     <body>
         <div class='success-container'>
             <div class='success-icon'>🎯</div>
-            <h1 class='success-title'>Nhập điểm thành công!</h1>
+            <h1 class='success-title'>Score Entry Successful!</h1>
             <div class='success-message'>
-                Điểm số đã được lưu vào hệ thống.
+                Score has been saved to the system.
             </div>
             
             <div class='score-info'>
-                <strong>Mã lượt bắn:</strong> #$score_id<br>
-                <strong>Tổng điểm:</strong> $total_score<br>
-                <strong>Ngày nhập:</strong> $date_recorded<br>
-                <strong>Loại điểm:</strong> $loai_diem
+                <strong>Session ID:</strong> #$score_id<br>
+                <strong>Total Score:</strong> $total_score<br>
+                <strong>Date Recorded:</strong> $date_recorded<br>
+                <strong>Score Type:</strong> $score_type
             </div>
             
             <div class='btn-group'>
-                <a href='view_scores.php' class='btn btn-primary'>Xem tất cả điểm</a>
-                <a href='add_score_step1.php' class='btn btn-primary'>Nhập điểm mới</a>
-                <a href='homepage.html' class='btn btn-secondary'>Về trang chủ</a>
+                <a href='view_scores.php' class='btn btn-primary'>View All Scores</a>
+                <a href='add_score_step1.php' class='btn btn-primary'>Enter New Score</a>
+                <a href='homepage.html' class='btn btn-secondary'>Return to Homepage</a>
             </div>
         </div>
     </body>
@@ -370,12 +370,12 @@ function displaySuccess($score_id, $total_score, $date_recorded, $context) {
     exit;
 }
 
-// HÀM KIỂM TRA DỮ LIỆU ĐIỂM CHI TIẾT (giữ nguyên)
+// DETAILED SCORE DATA VALIDATION FUNCTION (keep same structure)
 function validateScoreData($score_data) {
     $errors = [];
     
     if (empty($score_data)) {
-        $errors[] = "Không có dữ liệu điểm nào được gửi";
+        $errors[] = "No score data submitted";
         return $errors;
     }
     
@@ -385,9 +385,9 @@ function validateScoreData($score_data) {
         foreach ($ends as $end_num => $score_string) {
             $score_string = trim($score_string);
             
-            // Kiểm tra nếu end này hoàn toàn trống
+            // Check if this end is completely empty
             if (empty($score_string)) {
-                $errors[] = "End $end_num (Range $range_id) bị trống";
+                $errors[] = "End $end_num (Range $range_id) is empty";
                 continue;
             }
             
@@ -397,9 +397,9 @@ function validateScoreData($score_data) {
             foreach ($arrows as $arrow_index => $arrow) {
                 $arrow = strtoupper(trim($arrow));
                 
-                // Kiểm tra định dạng điểm
+                // Check score format
                 if (!in_array($arrow, ['M', 'X', '10', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'])) {
-                    $errors[] = "End $end_num, mũi tên " . ($arrow_index + 1) . ": '$arrow' không hợp lệ (chỉ chấp nhận 0-9, X, M)";
+                    $errors[] = "End $end_num, arrow " . ($arrow_index + 1) . ": '$arrow' is invalid (only accept 0-9, X, M)";
                     continue;
                 }
                 
@@ -407,37 +407,37 @@ function validateScoreData($score_data) {
                 $total_valid_arrows++;
             }
             
-            // Kiểm tra số lượng mũi tên trong end
+            // Check number of arrows in end
             if ($arrow_count === 0) {
-                $errors[] = "End $end_num (Range $range_id) không có mũi tên hợp lệ nào";
+                $errors[] = "End $end_num (Range $range_id) has no valid arrows";
             }
         }
     }
     
-    // Kiểm tra tổng số mũi tên
+    // Check total arrows
     if ($total_valid_arrows === 0) {
-        $errors[] = "Không có mũi tên hợp lệ nào trong tất cả các end";
+        $errors[] = "No valid arrows found in all ends";
     }
     
     return $errors;
 }
 
-// PHẦN CÒN LẠI CỦA MÃ NGUỒN GIỮ NGUYÊN
-// ... (phần main execution và các hàm khác giữ nguyên)
+// REMAINING CODE KEEPS THE SAME STRUCTURE
+// ... (main execution and other functions keep same structure)
 
 // MAIN EXECUTION
 try {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        throw new Exception("Phương thức yêu cầu không hợp lệ.");
+        throw new Exception("Invalid request method.");
     }
 
-    // DEBUG: Hiển thị toàn bộ POST data
+    // DEBUG: Display all POST data
     error_log("=== FULL POST DATA ===");
     foreach ($_POST as $key => $value) {
         error_log("$key: " . (is_array($value) ? print_r($value, true) : $value));
     }
 
-    // 1. Lấy dữ liệu từ form
+    // 1. Get data from form
     $user_id = isset($_POST['user_id']) ? intval($_POST['user_id']) : 0;
     $round_category_id = isset($_POST['round_category_id']) ? intval($_POST['round_category_id']) : 0;
     $bow_category_id = isset($_POST['bow_category_id']) ? intval($_POST['bow_category_id']) : 0;
@@ -447,54 +447,54 @@ try {
     $note = isset($_POST['note']) ? trim($_POST['note']) : '';
     $context = isset($_POST['context']) ? trim($_POST['context']) : 'practice';
 
-    // 2. KIỂM TRA NGHIÊM NGẶT DỮ LIỆU CƠ BẢN
+    // 2. STRICT BASIC DATA VALIDATION
     $basic_errors = [];
     
     if ($user_id <= 0) {
-        $basic_errors[] = "Vui lòng chọn người bắn";
+        $basic_errors[] = "Please select a shooter";
     }
     
     if ($round_category_id <= 0) {
-        $basic_errors[] = "Vui lòng chọn round";
+        $basic_errors[] = "Please select a round";
     }
 
     if ($bow_category_id <= 0) {
-        $basic_errors[] = "Vui lòng chọn dụng cụ";
+        $basic_errors[] = "Please select equipment";
     }
 
     if ($archer_category_id <= 0) {
-        $basic_errors[] = "Vui lòng chọn phân loại cung thủ";
+        $basic_errors[] = "Please select archer classification";
     }
 
     if (!empty($basic_errors)) {
-        throw new Exception("Dữ liệu cơ bản không hợp lệ:\n• " . implode("\n• ", $basic_errors));
+        throw new Exception("Invalid basic data:\n• " . implode("\n• ", $basic_errors));
     }
 
-    // 3. XỬ LÝ PHÂN BIỆT THI ĐẤU/LUYỆN TẬP
+    // 3. HANDLE COMPETITION/PRACTICE DISTINCTION
     if ($context === 'competition' && !empty($competition_id_input)) {
         $competition_id = $competition_id_input;
     } else {
         $competition_id = NULL;
     }
 
-    // 4. THU THẬP VÀ VALIDATE DỮ LIỆU ĐIỂM
+    // 4. COLLECT AND VALIDATE SCORE DATA
     $score_data = [];
     $total_score = 0;
     $tens_count = 0;
     $total_arrows = 0;
 
-    // Chỉ xử lý cấu trúc scores[range][end]
+    // Only process scores[range][end] structure
     if (isset($_POST['scores']) && is_array($_POST['scores']) && !empty($_POST['scores'])) {
         $score_data = $_POST['scores'];
         error_log("Score data found: " . print_r($score_data, true));
         
-        // VALIDATE CHI TIẾT DỮ LIỆU ĐIỂM
+        // DETAILED SCORE DATA VALIDATION
         $score_errors = validateScoreData($score_data);
         if (!empty($score_errors)) {
-            throw new Exception("Dữ liệu điểm không hợp lệ:\n• " . implode("\n• ", $score_errors));
+            throw new Exception("Invalid score data:\n• " . implode("\n• ", $score_errors));
         }
         
-        // TÍNH ĐIỂM SAU KHI ĐÃ VALIDATE
+        // CALCULATE SCORE AFTER VALIDATION
         foreach ($score_data as $range_category_id => $ends) {
             foreach ($ends as $end_num => $score_string) {
                 $score_string = trim($score_string);
@@ -521,42 +521,42 @@ try {
             }
         }
     } else {
-        throw new Exception("Không tìm thấy dữ liệu điểm. Có thể form chưa được gửi đúng cách.");
+        throw new Exception("No score data found. The form may not have been submitted correctly.");
     }
 
-    // KIỂM TRA LẦN CUỐI TRƯỚC KHI LƯU
+    // FINAL CHECK BEFORE SAVING
     if ($total_arrows === 0) {
-        throw new Exception("Không có mũi tên hợp lệ nào để lưu. Vui lòng kiểm tra lại dữ liệu điểm.");
+        throw new Exception("No valid arrows to save. Please check the score data.");
     }
 
     if ($total_score === 0) {
-        throw new Exception("Tổng điểm bằng 0. Nếu đúng là 0 điểm, vui lòng xác nhận lại.");
+        throw new Exception("Total score is 0. If this is correct, please confirm again.");
     }
 
     error_log("VALIDATION PASSED - Total arrows: $total_arrows, Total score: $total_score, Tens count: $tens_count");
 
-    // 5. Xác định round_id
+    // 5. Determine round_id
     $round_id = $round_category_id;
 
-    // 6. BẮT ĐẦU TRANSACTION
+    // 6. BEGIN TRANSACTION
     $conn->begin_transaction();
 
     try {
-        // KIỂM TRA LẠI TRƯỚC KHI INSERT
+        // FINAL CHECK BEFORE INSERT
         if ($user_id <= 0 || $round_id <= 0 || $archer_category_id <= 0) {
-            throw new Exception("Dữ liệu không hợp lệ khi chuẩn bị lưu");
+            throw new Exception("Invalid data when preparing to save");
         }
 
-        // BƯỚC 1: Tạo bản ghi trong bảng scores
+        // STEP 1: Create record in scores table
         $sql_score = "INSERT INTO scores (user_id, round_id, competition_id, archer_category_id, total_score, is_approved) 
                       VALUES (?, ?, ?, ?, ?, ?)";
         $stmt_score = $conn->prepare($sql_score);
         
         if (!$stmt_score) {
-            throw new Exception("Lỗi chuẩn bị câu lệnh scores: " . $conn->error);
+            throw new Exception("Error preparing scores statement: " . $conn->error);
         }
         
-        $is_approved = 0; // Mặc định chờ duyệt
+        $is_approved = 0; // Default pending approval
         
         $stmt_score->bind_param("iisiii", 
             $user_id, 
@@ -568,13 +568,13 @@ try {
         );
         
         if (!$stmt_score->execute()) {
-            throw new Exception("Lỗi thực thi scores: " . $stmt_score->error);
+            throw new Exception("Error executing scores: " . $stmt_score->error);
         }
         
         $score_id = $conn->insert_id;
         $stmt_score->close();
 
-        // BƯỚC 2: Lưu thông tin bổ sung nếu bảng score_metadata tồn tại
+        // STEP 2: Save additional information if score_metadata table exists
         $check_table_sql = "SHOW TABLES LIKE 'score_metadata'";
         $result = $conn->query($check_table_sql);
         if ($result->num_rows > 0) {
@@ -593,7 +593,7 @@ try {
                     $context
                 );
                 if (!$stmt_metadata->execute()) {
-                    throw new Exception("Lỗi thực thi metadata: " . $stmt_metadata->error);
+                    throw new Exception("Error executing metadata: " . $stmt_metadata->error);
                 }
                 $stmt_metadata->close();
             }
@@ -602,17 +602,17 @@ try {
         // COMMIT transaction
         $conn->commit();
         
-        // HIỂN THỊ THÀNH CÔNG
+        // DISPLAY SUCCESS
         displaySuccess($score_id, $total_score, $date_recorded, $context);
 
     } catch (Exception $e) {
-        // ROLLBACK nếu có lỗi
+        // ROLLBACK if error occurs
         $conn->rollback();
-        throw new Exception("Lỗi khi lưu vào database: " . $e->getMessage());
+        throw new Exception("Error saving to database: " . $e->getMessage());
     }
 
 } catch (Exception $e) {
-    displayError("Không thể lưu điểm", $e->getMessage());
+    displayError("Unable to save score", $e->getMessage());
 }
 
 if (isset($conn)) {

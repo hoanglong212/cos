@@ -25,9 +25,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssssss", $username, $password, $email, $fname, $lname, $birthday, $gender, $phone);
         if ($stmt->execute()) {
-            $_SESSION["register_success"] = "✅ Registration successful! You can now log in.";
-            header("Location: login.php");
-            exit;
+            // TỰ ĐỘNG ĐĂNG NHẬP sau khi đăng ký
+            $user_id = $stmt->insert_id; // Lấy ID user vừa tạo
+            
+            // Lấy thông tin user
+            $user_query = $conn->prepare("SELECT user_id, first_name FROM user_table WHERE user_id = ?");
+            $user_query->bind_param("i", $user_id);
+            $user_query->execute();
+            $user_result = $user_query->get_result();
+            
+            if ($user_result->num_rows > 0) {
+                $user_data = $user_result->fetch_assoc();
+                
+                // Tạo session (tương tự như login.php)
+                $_SESSION["user_id"] = $user_data["user_id"];
+                $_SESSION["first_name"] = $user_data["first_name"];
+                $_SESSION["role"] = "archer"; // Mặc định role là archer
+                $_SESSION["username"] = $username;
+                
+                $_SESSION["register_success"] = "✅ Registration successful! Welcome to Swinburne Archery Club.";
+                header("Location: homepage.php"); // Chuyển thẳng đến homepage
+                exit;
+            }
         } else {
             $error = "❌ Registration failed. Try again later.";
         }

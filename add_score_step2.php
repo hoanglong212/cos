@@ -1,39 +1,39 @@
 <?php
 include 'connect.php';
 
-// 1. NHẬN DỮ LIỆU TỪ BƯỚC 1 - THÊM archer_category_id
+// 1. RECEIVE DATA FROM STEP 1 - ADD archer_category_id
 $user_id = $_POST['user_id'] ?? 0;
 $round_category_id = $_POST['round_category_id'] ?? 0;
 $bow_category_id = $_POST['bow_category_id'] ?? 0;
-$archer_category_id = $_POST['archer_category_id'] ?? 0; // THÊM DÒNG NÀY
+$archer_category_id = $_POST['archer_category_id'] ?? 0; // ADD THIS LINE
 $date_recorded = $_POST['date_recorded'] ?? date('Y-m-d');
 $competition_id = !empty($_POST['competition_id']) ? $_POST['competition_id'] : NULL;
 $note = $_POST['note'] ?? '';
 $context = $_POST['context'] ?? 'practice';
 
-// Kiểm tra validation - THÊM KIỂM TRA archer_category_id
+// Check validation - ADD archer_category_id CHECK
 if ($round_category_id == 0 || $user_id == 0 || $archer_category_id == 0) {
-    die("Lỗi: Vui lòng quay lại Bước 1 và chọn đầy đủ thông tin.");
+    die("Error: Please go back to Step 1 and select all required information.");
 }
 
-// 2. LẤY THÔNG TIN CƠ BẢN - THÊM LẤY THÔNG TIN ARCHER CATEGORY
+// 2. GET BASIC INFORMATION - ADD ARCHER CATEGORY INFO
 [$user_name, $round_name, $bow_name, $archer_category_name] = getBasicInfo($conn, $user_id, $round_category_id, $bow_category_id, $archer_category_id);
 
-// 3. LẤY CẤU TRÚC ROUND
+// 3. GET ROUND STRUCTURE
 $ranges = getRoundRanges($conn, $round_category_id);
 
-// 4. TÍNH ĐIỂM TỰ ĐỘNG
+// 4. CALCULATE SCORES AUTOMATICALLY
 [$total_score, $tens_count, $total_arrows, $range_scores, $achievement_message, $max_possible_score, $selected_ends_count] = 
     calculateScores($_POST, $ranges);
 
-// 5. LẤY LỊCH SỬ ĐIỂM
+// 5. GET SCORE HISTORY
 [$previous_score, $improvement] = getScoreHistory($conn, $user_id, $round_category_id, $total_score);
 
-// HÀM LẤY THÔNG TIN CƠ BẢN - THÊM ARCHER CATEGORY
+// BASIC INFO FUNCTION - ADD ARCHER CATEGORY
 function getBasicInfo($conn, $user_id, $round_category_id, $bow_category_id, $archer_category_id) {
-    $user_name = $round_name = $bow_name = $archer_category_name = "Không rõ";
+    $user_name = $round_name = $bow_name = $archer_category_name = "Unknown";
     
-    // Lấy tên User
+    // Get User name
     $stmt = $conn->prepare("SELECT first_name, last_name FROM user_table WHERE user_id = ?");
     if ($stmt) {
         $stmt->bind_param("i", $user_id);
@@ -44,7 +44,7 @@ function getBasicInfo($conn, $user_id, $round_category_id, $bow_category_id, $ar
         $stmt->close();
     }
     
-    // Lấy tên Round
+    // Get Round name
     $stmt = $conn->prepare("SELECT round_name FROM round_category WHERE round_category_id = ?");
     if ($stmt) {
         $stmt->bind_param("i", $round_category_id);
@@ -55,7 +55,7 @@ function getBasicInfo($conn, $user_id, $round_category_id, $bow_category_id, $ar
         $stmt->close();
     }
     
-    // Lấy tên Dụng cụ
+    // Get Equipment name
     $stmt = $conn->prepare("SELECT category_name FROM bow_category WHERE bow_category_id = ?");
     if ($stmt) {
         $stmt->bind_param("i", $bow_category_id);
@@ -66,7 +66,7 @@ function getBasicInfo($conn, $user_id, $round_category_id, $bow_category_id, $ar
         $stmt->close();
     }
     
-    // Lấy tên Archer Category - THÊM PHẦN NÀY
+    // Get Archer Category name - ADD THIS SECTION
     $stmt = $conn->prepare("SELECT category_name FROM archer_category WHERE archer_category_id = ?");
     if ($stmt) {
         $stmt->bind_param("i", $archer_category_id);
@@ -80,7 +80,7 @@ function getBasicInfo($conn, $user_id, $round_category_id, $bow_category_id, $ar
     return [$user_name, $round_name, $bow_name, $archer_category_name];
 }
 
-// HÀM LẤY CẤU TRÚC ROUND (giữ nguyên)
+// GET ROUND STRUCTURE FUNCTION (keep same)
 function getRoundRanges($conn, $round_category_id) {
     $sql = "SELECT rc.range_category_id, rc.name, rc.number_of_ends, rc.distance, rc.face_size
             FROM round_category_details rcd
@@ -88,7 +88,7 @@ function getRoundRanges($conn, $round_category_id) {
             WHERE rcd.round_category_id = ? ORDER BY rc.distance DESC";
     
     $stmt = $conn->prepare($sql);
-    if (!$stmt) die("Lỗi SQL: " . $conn->error);
+    if (!$stmt) die("SQL Error: " . $conn->error);
     
     $stmt->bind_param("i", $round_category_id);
     $stmt->execute();
@@ -101,20 +101,20 @@ function getRoundRanges($conn, $round_category_id) {
     $stmt->close();
     
     if (empty($ranges)) {
-        die("Lỗi: Round này chưa được định nghĩa cự ly (ranges).");
+        die("Error: This round has not been defined with ranges.");
     }
     
     return $ranges;
 }
 
-// HÀM TÍNH ĐIỂM (giữ nguyên)
+// CALCULATE SCORES FUNCTION (keep same)
 function calculateScores($post, $ranges) {
     $total_score = $tens_count = $total_arrows = $max_possible_score = $selected_ends_count = 0;
     $range_scores = [];
     $achievement_message = '';
     
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($post['calculate'])) {
-        // Tính điểm tối đa có thể
+        // Calculate maximum possible score
         foreach ($ranges as $range) {
             $is_selected = isset($post['selected_ranges'][$range['range_category_id']]);
             if ($is_selected) {
@@ -123,7 +123,7 @@ function calculateScores($post, $ranges) {
             }
         }
         
-        // Mặc định tính tất cả nếu không chọn
+        // Default to all if none selected
         if ($max_possible_score === 0) {
             foreach ($ranges as $range) {
                 $max_possible_score += $range['number_of_ends'] * 6 * 10;
@@ -131,7 +131,7 @@ function calculateScores($post, $ranges) {
             }
         }
         
-        // Tính điểm thực tế
+        // Calculate actual score
         if (isset($post['scores']) && is_array($post['scores'])) {
             foreach ($post['scores'] as $range_id => $ends) {
                 $range_name = getRangeName($ranges, $range_id);
@@ -158,14 +158,14 @@ function calculateScores($post, $ranges) {
             }
         }
         
-        // Kiểm tra thành tích
+        // Check achievement
         $achievement_message = checkAchievement($total_score, $max_possible_score, $tens_count, $selected_ends_count);
     }
     
     return [$total_score, $tens_count, $total_arrows, $range_scores, $achievement_message, $max_possible_score, $selected_ends_count];
 }
 
-// HÀM PHỤ TRỢ (giữ nguyên)
+// HELPER FUNCTIONS (keep same)
 function getRangeName($ranges, $range_id) {
     foreach ($ranges as $range) {
         if ($range['range_category_id'] == $range_id) {
@@ -187,9 +187,9 @@ function checkAchievement($total_score, $max_possible_score, $tens_count, $selec
     $medium_threshold = $max_possible_score * 0.69;
     
     if ($total_score >= $high_threshold) {
-        return createAchievementPopup('🎯🏆', 'Chúc mừng!', 'Điểm số tuyệt vời', $total_score);
+        return createAchievementPopup('🎯🏆', 'Congratulations!', 'Excellent score', $total_score);
     } elseif ($total_score >= $medium_threshold) {
-        return createAchievementPopup('⭐', 'Rất tốt!', 'Điểm số ấn tượng', $total_score);
+        return createAchievementPopup('⭐', 'Well done!', 'Impressive score', $total_score);
     }
     return '';
 }
@@ -200,13 +200,13 @@ function createAchievementPopup($icon, $title, $message, $score) {
             <div class='achievement-icon'>{$icon}</div>
             <h3>{$title}</h3>
             <p>{$message}: <strong>{$score}</strong></p>
-            <small>" . ($icon === '🎯🏆' ? 'Bạn đang tiến bộ rất nhanh!' : 'Tiếp tục phát huy nhé!') . "</small>
-            <br><small style='color: #7f8c8d; font-size: 0.8rem;'>(Nhấp để đóng)</small>
+            <small>" . ($icon === '🎯🏆' ? 'You are improving very fast!' : 'Keep up the good work!') . "</small>
+            <br><small style='color: #7f8c8d; font-size: 0.8rem;'>(Click to close)</small>
         </div>
     </div>";
 }
 
-// HÀM LẤY LỊCH SỬ ĐIỂM (giữ nguyên)
+// GET SCORE HISTORY FUNCTION (keep same)
 function getScoreHistory($conn, $user_id, $round_category_id, $current_score) {
     $previous_score = $improvement = 0;
     
@@ -226,10 +226,10 @@ function getScoreHistory($conn, $user_id, $round_category_id, $current_score) {
 ?>
 
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Thêm điểm - Bước 2</title>
+    <title>Add Score - Step 2</title>
     <link rel="stylesheet" href="style2.css"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -240,45 +240,45 @@ function getScoreHistory($conn, $user_id, $round_category_id, $current_score) {
     <div class="form-card-step2">
         <div class="card-header-step2">
             <div class="back-button-container">
-                <a href="add_score_step1.php" class="back-button">Quay lại Bước 1</a>
+                <a href="add_score_step1.php" class="back-button">Back to Step 1</a>
             </div>
-            <h1>🎯 Nhập điểm (Bước 2/2)</h1>
+            <h1>🎯 Enter Scores (Step 2/2)</h1>
         </div>
         
         <div class="card-body-step2">
-            <!-- HỘP TÓM TẮT - THÊM PHÂN LOẠI CUNG THỦ -->
+            <!-- SUMMARY BOX - ADD ARCHER CLASSIFICATION -->
             <div class="summary-box-modern">
-                <h3>Tóm tắt buổi bắn</h3>
+                <h3>Session Summary</h3>
                 <ul>
-                    <li><strong>Người bắn:</strong> <?= htmlspecialchars($user_name) ?></li>
-                    <li><strong>Phân loại:</strong> <?= htmlspecialchars($archer_category_name) ?></li> <!-- THÊM DÒNG NÀY -->
+                    <li><strong>Shooter:</strong> <?= htmlspecialchars($user_name) ?></li>
+                    <li><strong>Classification:</strong> <?= htmlspecialchars($archer_category_name) ?></li> <!-- ADD THIS LINE -->
                     <li><strong>Round:</strong> <?= htmlspecialchars($round_name) ?></li>
-                    <li><strong>Dụng cụ:</strong> <?= htmlspecialchars($bow_name) ?></li>
-                    <li><strong>Ngày:</strong> <?= htmlspecialchars($date_recorded) ?></li>
-                    <li><strong>Loại:</strong> <?= htmlspecialchars(ucfirst($context)) ?></li>
+                    <li><strong>Equipment:</strong> <?= htmlspecialchars($bow_name) ?></li>
+                    <li><strong>Date:</strong> <?= htmlspecialchars($date_recorded) ?></li>
+                    <li><strong>Type:</strong> <?= htmlspecialchars(ucfirst($context)) ?></li>
                     <?php if ($competition_id): ?>
                     <li><strong>Competition:</strong> <?= htmlspecialchars($competition_id) ?></li>
                     <?php endif; ?>
                     <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['calculate'])): ?>
-                    <li><strong>Số end được tính:</strong> <?= $selected_ends_count ?> end</li>
-                    <li><strong>Điểm tối đa có thể:</strong> <?= $max_possible_score ?> điểm</li>
+                    <li><strong>Ends calculated:</strong> <?= $selected_ends_count ?> ends</li>
+                    <li><strong>Maximum possible score:</strong> <?= $max_possible_score ?> points</li>
                     <?php endif; ?>
                 </ul>
             </div>
 
-            <!-- KẾT QUẢ TÍNH ĐIỂM -->
+            <!-- SCORE CALCULATION RESULTS -->
             <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['calculate'])): 
                 $average_score = $total_arrows > 0 ? number_format($total_score / $total_arrows, 1) : '0.0';
                 $progress_percent = $max_possible_score > 0 ? min(100, ($total_score / $max_possible_score) * 100) : 0;
                 $badges = getAchievementBadges($total_score, $max_possible_score, $tens_count, $selected_ends_count, $average_score);
             ?>
             <div class="score-calculator">
-                <h4>Kết quả tính điểm</h4>
+                <h4>Score Calculation Results</h4>
                 
                 <!-- PROGRESS BAR -->
                 <div class="score-progress">
                     <div class="progress-header">
-                        <span>Tiến độ điểm số</span>
+                        <span>Score Progress</span>
                         <span><?= $total_score ?> / <?= $max_possible_score ?></span>
                     </div>
                     <div class="progress-container">
@@ -286,26 +286,26 @@ function getScoreHistory($conn, $user_id, $round_category_id, $current_score) {
                     </div>
                     <?php if ($selected_ends_count > 0): ?>
                     <div style="text-align: center; margin-top: 5px; font-size: 0.8rem; color: #7f8c8d;">
-                        <?= $selected_ends_count ?> end được tính • <?= number_format($progress_percent, 1) ?>%
+                        <?= $selected_ends_count ?> ends calculated • <?= number_format($progress_percent, 1) ?>%
                     </div>
                     <?php endif; ?>
                 </div>
                 
                 <div class="stats-grid">
                     <div class="stat-item total-score">
-                        <h5>Tổng điểm</h5>
+                        <h5>Total Score</h5>
                         <p class="stat-value"><?= $total_score ?></p>
                     </div>
                     <div class="stat-item">
-                        <h5>Số mũi tên 10/X</h5>
+                        <h5>10/X Arrows</h5>
                         <p class="stat-value"><?= $tens_count ?></p>
                     </div>
                     <div class="stat-item">
-                        <h5>Điểm trung bình</h5>
+                        <h5>Average Score</h5>
                         <p class="stat-value"><?= $average_score ?></p>
                     </div>
                     <div class="stat-item">
-                        <h5>Tổng mũi tên</h5>
+                        <h5>Total Arrows</h5>
                         <p class="stat-value"><?= $total_arrows ?></p>
                     </div>
                 </div>
@@ -319,32 +319,32 @@ function getScoreHistory($conn, $user_id, $round_category_id, $current_score) {
                 </div>
                 <?php endif; ?>
 
-                <!-- SO SÁNH -->
+                <!-- COMPARISON -->
                 <?php if ($previous_score > 0): ?>
                 <div class="comparison-box">
-                    <h5>So sánh với lần trước</h5>
+                    <h5>Comparison with Previous</h5>
                     <div class="comparison-stats">
                         <div class="comparison-item">
-                            <span>Lần trước:</span>
-                            <strong><?= $previous_score ?> điểm</strong>
+                            <span>Previous:</span>
+                            <strong><?= $previous_score ?> points</strong>
                         </div>
                         <div class="comparison-item <?= $improvement >= 0 ? 'improved' : 'declined' ?>">
-                            <span>Thay đổi:</span>
-                            <strong><?= $improvement >= 0 ? '+' : '' ?><?= $improvement ?> điểm</strong>
+                            <span>Change:</span>
+                            <strong><?= $improvement >= 0 ? '+' : '' ?><?= $improvement ?> points</strong>
                         </div>
                     </div>
                 </div>
                 <?php endif; ?>
 
-                <!-- ĐIỂM CHI TIẾT -->
+                <!-- DETAILED SCORES -->
                 <?php if (!empty($range_scores)): ?>
                 <div class="score-breakdown">
-                    <h5>Điểm chi tiết theo cự ly</h5>
+                    <h5>Detailed Scores by Distance</h5>
                     <div class="range-scores">
                         <?php foreach ($range_scores as $range_name => $score): ?>
                         <div class="range-score-item">
                             <span class="distance"><?= htmlspecialchars($range_name) ?></span>
-                            <span class="score"><?= $score ?> điểm</span>
+                            <span class="score"><?= $score ?> points</span>
                         </div>
                         <?php endforeach; ?>
                     </div>
@@ -353,25 +353,25 @@ function getScoreHistory($conn, $user_id, $round_category_id, $current_score) {
             </div>
             <?php endif; ?>
 
-            <!-- HƯỚNG DẪN -->
+            <!-- INSTRUCTIONS -->
             <div class="help-box-modern">
                 <p>
-                    <strong>🎯 Cách nhập điểm:</strong> Mỗi end nhập 6 điểm cách nhau bằng dấu phẩy.
+                    <strong>🎯 How to enter scores:</strong> Enter 6 scores for each end separated by commas.
                     <br>
-                    <strong>📝 Ví dụ:</strong> <code>X,9,8,7,M,10</code> (Dùng <code>X</code> cho 10, <code>M</code> cho 0)
+                    <strong>📝 Example:</strong> <code>X,9,8,7,M,10</code> (Use <code>X</code> for 10, <code>M</code> for 0)
                 </p>
             </div>
 
             <!-- QUICK ACTIONS -->
             <div class="quick-actions">
-                <button type="button" class="quick-btn" onclick="selectAllRanges()">✅ Chọn tất cả cự ly</button>
-                <button type="button" class="quick-btn secondary" onclick="deselectAllRanges()">❌ Bỏ chọn tất cả</button>
-                <button type="button" class="quick-btn" onclick="fillSampleData()">🧪 Điền dữ liệu mẫu</button>
+                <button type="button" class="quick-btn" onclick="selectAllRanges()">✅ Select all distances</button>
+                <button type="button" class="quick-btn secondary" onclick="deselectAllRanges()">❌ Deselect all</button>
+                <button type="button" class="quick-btn" onclick="fillSampleData()">🧪 Fill sample data</button>
             </div>
 
-            <!-- CHỌN RANGE -->
+            <!-- RANGE SELECTOR -->
             <div class="range-selector-modern">
-                <h4>Chọn cự ly muốn nhập điểm</h4>
+                <h4>Select distances to enter scores</h4>
                 <div class="range-options-grid">
                     <?php foreach ($ranges as $range): 
                         $is_checked = !isset($_POST['selected_ranges']) || isset($_POST['selected_ranges'][$range['range_category_id']]);
@@ -395,17 +395,17 @@ function getScoreHistory($conn, $user_id, $round_category_id, $current_score) {
             </div>
 
             <form action="" method="POST" id="score-form">
-                <!-- CÁC TRƯỜNG ẨN - THÊM archer_category_id -->
+                <!-- HIDDEN FIELDS - ADD archer_category_id -->
                 <input type="hidden" name="user_id" value="<?= htmlspecialchars($user_id) ?>">
                 <input type="hidden" name="round_category_id" value="<?= htmlspecialchars($round_category_id) ?>">
                 <input type="hidden" name="bow_category_id" value="<?= htmlspecialchars($bow_category_id) ?>">
-                <input type="hidden" name="archer_category_id" value="<?= htmlspecialchars($archer_category_id) ?>"> <!-- THÊM DÒNG NÀY -->
+                <input type="hidden" name="archer_category_id" value="<?= htmlspecialchars($archer_category_id) ?>"> <!-- ADD THIS LINE -->
                 <input type="hidden" name="date_recorded" value="<?= htmlspecialchars($date_recorded) ?>">
                 <input type="hidden" name="competition_id" value="<?= htmlspecialchars($competition_id) ?>">
                 <input type="hidden" name="note" value="<?= htmlspecialchars($note) ?>">
                 <input type="hidden" name="context" value="<?= htmlspecialchars($context) ?>">
 
-                <!-- LƯỚI ĐIỂM -->
+                <!-- SCORING GRID -->
                 <div class="scoring-grid-modern" id="scoring-grid">
                     <?php foreach ($ranges as $range): 
                         $is_visible = !isset($_POST['selected_ranges']) || isset($_POST['selected_ranges'][$range['range_category_id']]);
@@ -420,14 +420,14 @@ function getScoreHistory($conn, $user_id, $round_category_id, $current_score) {
                                     <div class="end-card">
                                         <div class="end-header">
                                             <div class="end-number">End <?= $endNum ?></div>
-                                            <div class="arrows-count">6 mũi tên</div>
+                                            <div class="arrows-count">6 arrows</div>
                                         </div>
                                         <input type="text" class="end-input-modern" placeholder="X,9,8,7,M,10"
                                                name="scores[<?= $range['range_category_id'] ?>][<?= $endNum ?>]"
                                                value="<?= htmlspecialchars($current_value) ?>"
                                                pattern="[0-9XxMm, ]+"
-                                               title="Nhập 6 điểm cách nhau bằng dấu phẩy (VD: X,9,8,7,M,10)">
-                                        <div class="input-hint">Nhập 6 điểm, cách nhau bằng dấu phẩy</div>
+                                               title="Enter 6 scores separated by commas (e.g., X,9,8,7,M,10)">
+                                        <div class="input-hint">Enter 6 scores, separated by commas</div>
                                     </div>
                                 <?php endfor; ?>
                             </div>
@@ -435,11 +435,11 @@ function getScoreHistory($conn, $user_id, $round_category_id, $current_score) {
                     <?php endforeach; ?>
                 </div>
                 
-                <!-- NÚT BẤM -->
+                <!-- BUTTONS -->
                 <div class="form-buttons">
-                    <button type="submit" name="calculate" class="calculate-btn">🔢 Tính điểm ngay</button>
+                    <button type="submit" name="calculate" class="calculate-btn">🔢 Calculate Score Now</button>
                     <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['calculate'])): ?>
-                    <button type="submit" formaction="insert_score_fast.php" class="submit-btn-step2">💾 Lưu điểm và hoàn thành</button>
+                    <button type="submit" formaction="insert_score_fast.php" class="submit-btn-step2">💾 Save Score and Complete</button>
                     <?php endif; ?>
                 </div>
             </form>
@@ -447,12 +447,12 @@ function getScoreHistory($conn, $user_id, $round_category_id, $current_score) {
     </div>
 
     <script>
-        // TỰ ĐỘNG ĐÓNG POPUP SAU 5 GIÂY
+        // AUTO CLOSE POPUP AFTER 5 SECONDS
         setTimeout(() => {
             document.querySelector('.achievement-popup')?.remove();
         }, 5000);
 
-        // CHO PHÉP NHẤP ĐỂ ĐÓNG POPUP
+        // ALLOW CLICK TO CLOSE POPUP
         document.addEventListener('click', (e) => {
             if (e.target.classList.contains('achievement-popup')) {
                 e.target.remove();
@@ -469,21 +469,21 @@ function getScoreHistory($conn, $user_id, $round_category_id, $current_score) {
             rangeFieldset.classList.toggle('hidden-range', !checkbox.checked);
         }
 
-        // CHỌN TẤT CẢ RANGES
+        // SELECT ALL RANGES
         function selectAllRanges() {
             document.querySelectorAll('.range-checkbox-modern').forEach(checkbox => checkbox.checked = true);
             document.querySelectorAll('.range-option-card').forEach(card => card.classList.add('selected'));
             document.querySelectorAll('.range-fieldset').forEach(fieldset => fieldset.classList.remove('hidden-range'));
         }
 
-        // BỎ CHỌN TẤT CẢ RANGES
+        // DESELECT ALL RANGES
         function deselectAllRanges() {
             document.querySelectorAll('.range-checkbox-modern').forEach(checkbox => checkbox.checked = false);
             document.querySelectorAll('.range-option-card').forEach(card => card.classList.remove('selected'));
             document.querySelectorAll('.range-fieldset').forEach(fieldset => fieldset.classList.add('hidden-range'));
         }
 
-        // ĐIỀN DỮ LIỆU MẪU
+        // FILL SAMPLE DATA
         function fillSampleData() {
             const sampleData = ['X,9,8,7,6,5', '10,9,8,X,M,7', '9,8,7,6,5,4', 'X,X,9,8,7,6', '10,9,8,7,6,5', '9,8,7,X,10,M'];
             document.querySelectorAll('.end-input-modern').forEach(input => {
@@ -491,7 +491,7 @@ function getScoreHistory($conn, $user_id, $round_category_id, $current_score) {
             });
         }
 
-        // KHỞI TẠO TRẠNG THÁI BAN ĐẦU
+        // INITIALIZE INITIAL STATE
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.range-checkbox-modern').forEach(checkbox => {
                 const rangeId = checkbox.id.replace('range-', '');
@@ -506,7 +506,7 @@ function getScoreHistory($conn, $user_id, $round_category_id, $current_score) {
 </html>
 
 <?php
-// HÀM LẤY BADGES THÀNH TÍCH
+// ACHIEVEMENT BADGES FUNCTION
 function getAchievementBadges($total_score, $max_possible_score, $tens_count, $selected_ends_count, $average_score) {
     $badges = [];
     if ($total_score >= $max_possible_score * 0.83) {
@@ -523,7 +523,7 @@ function getAchievementBadges($total_score, $max_possible_score, $tens_count, $s
     return $badges;
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_score'])) {
-    // Lấy dữ liệu từ form
+    // Get data from form
     $user_id = $_POST['user_id'] ?? 0;
     $round_category_id = $_POST['round_category_id'] ?? 0;
     $bow_category_id = $_POST['bow_category_id'] ?? 0;
@@ -533,26 +533,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_score'])) {
     $total_score = $_POST['total_score'] ?? 0;
     $note = $_POST['note'] ?? '';
     
-    // Lưu vào database
+    // Save to database
     $sql = "INSERT INTO scores (user_id, round_id, competition_id, archer_category_id, total_score, is_approved, date_recorded) 
             VALUES (?, ?, ?, ?, ?, 1, ?)";
     
     $stmt = $conn->prepare($sql);
     if ($stmt) {
-        // Lưu ý: round_id ở đây là round_category_id từ form của bạn
+        // Note: round_id here is the round_category_id from your form
         $stmt->bind_param("iisiis", $user_id, $round_category_id, $competition_id, $archer_category_id, $total_score, $date_recorded);
         
         if ($stmt->execute()) {
-            echo "<div class='success-message'>✅ Điểm số đã được lưu thành công!</div>";
-            // Có thể redirect về trang quản lý
-            // header("Location: archery_management.php?message=Điểm+số+đã+được+lưu");
+            echo "<div class='success-message'>✅ Score saved successfully!</div>";
+            // You can redirect to management page
+            // header("Location: archery_management.php?message=Score+saved+successfully");
             // exit();
         } else {
-            echo "<div class='error-message'>❌ Lỗi khi lưu điểm số: " . $conn->error . "</div>";
+            echo "<div class='error-message'>❌ Error saving score: " . $conn->error . "</div>";
         }
         $stmt->close();
     } else {
-        echo "<div class='error-message'>❌ Lỗi chuẩn bị SQL: " . $conn->error . "</div>";
+        echo "<div class='error-message'>❌ SQL preparation error: " . $conn->error . "</div>";
     }
 }
 ?>
